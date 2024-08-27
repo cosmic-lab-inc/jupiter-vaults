@@ -1,10 +1,7 @@
 [workspace]
 members = [
     "programs/*",
-]
-# exclude from members
-exclude = [
-    "programs/jupiter",
+    "crates/*"
 ]
 
 [profile.release]

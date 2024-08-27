@@ -1100,6 +1100,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "jupiter"
+version = "6.0.0"
+dependencies = [
+ "anchor-lang",
+ "rand 0.8.5",
+]
+
+[[package]]
 name = "jupiter_vaults"
 version = "0.1.0"
 dependencies = [
@@ -1495,6 +1503,7 @@ version = "0.8.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "34af8d1a0e25924bc5b7c43c079c942339d8f0a8b57c39049bef581b46327404"
 dependencies = [
+ "libc",
  "rand_chacha 0.3.1",
  "rand_core 0.6.4",
 ]
