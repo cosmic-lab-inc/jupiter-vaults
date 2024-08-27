@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 use anchor_lang::solana_program::native_token::LAMPORTS_PER_SOL;
 
 pub const LAMPORTS_PER_SOL_U64: u64 = LAMPORTS_PER_SOL;

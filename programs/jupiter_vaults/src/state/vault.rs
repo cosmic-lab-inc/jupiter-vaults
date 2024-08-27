@@ -2,7 +2,9 @@ use anchor_lang::prelude::*;
 use static_assertions::const_assert_eq;
 use crate::Size;
 use crate::state::withdraw_request::WithdrawRequest;
+use drift_macros::assert_no_slop;
 
+// #[assert_no_slop]
 #[account(zero_copy(unsafe))]
 #[derive(Default, Eq, PartialEq, Debug)]
 #[repr(C)]
@@ -110,3 +112,10 @@ impl Size for Vault {
     const SIZE: usize = 512 + 8;
 }
 const_assert_eq!(Vault::SIZE, std::mem::size_of::<Vault>() + 8);
+
+#[test]
+fn s() {
+    let a = Vault::SIZE;
+    let b = std::mem::size_of::<Vault>() + 8;
+    println!("{} == {}", a, b);
+}

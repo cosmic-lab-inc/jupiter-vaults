@@ -1,5 +1,5 @@
 [package]
-name = "jupiter-vaults"
+name = "jupiter_vaults"
 version = "0.1.0"
 description = "Created with Anchor"
 edition = "2021"
@@ -21,3 +21,4 @@ static_assertions = "1.1.0"
 ahash = "=0.8.6"
 uint = "0.9.1"
 num-traits = "0.2.15"
+drift-macros = { git = "https://github.com/drift-labs/drift-macros.git", rev = "c57d87" }

@@ -1,6 +1,6 @@
 [workspace]
 members = [
-    "programs/*"
+    "programs/jupiter_vaults"
 ]
 
 [profile.release]

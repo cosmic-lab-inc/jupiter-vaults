@@ -17,9 +17,13 @@ pub fn initialize_vault<'c: 'info, 'info>(
     vault.name = params.name;
     vault.pubkey = *ctx.accounts.vault.to_account_info().key;
     vault.manager = *ctx.accounts.manager.key;
+    vault.protocol = params.protocol;
     vault.token_account = *ctx.accounts.token_account.to_account_info().key;
     vault.mint = *ctx.accounts.mint.to_account_info().key;
     vault.init_ts = Clock::get()?.unix_timestamp;
+    vault.bump = bump;
+    vault.permissioned = params.permissioned;
+    vault.version = params.version;
     
     validate!(
         params.redeem_period < ONE_DAY * 90,
@@ -52,7 +56,6 @@ pub fn initialize_vault<'c: 'info, 'info>(
     )?;
     vault.profit_share = params.profit_share;
     vault.protocol_profit_share = params.protocol_profit_share;
-    vault.protocol = params.protocol;
 
     validate!(
         params.hurdle_rate == 0,
@@ -60,9 +63,6 @@ pub fn initialize_vault<'c: 'info, 'info>(
         "hurdle rate not implemented"
     )?;
     vault.hurdle_rate = params.hurdle_rate;
-    vault.bump = bump;
-    vault.permissioned = params.permissioned;
-    vault.version = params.version;
 
     drop(vault);
 
