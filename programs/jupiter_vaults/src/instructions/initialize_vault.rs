@@ -23,7 +23,6 @@ pub fn initialize_vault<'c: 'info, 'info>(
     vault.init_ts = Clock::get()?.unix_timestamp;
     vault.bump = bump;
     vault.permissioned = params.permissioned;
-    // vault.version = params.version;
 
     validate!(
         params.redeem_period < ONE_DAY * 90,
@@ -83,7 +82,6 @@ pub struct VaultParams {
     pub protocol: Pubkey,
     pub protocol_fee: u64,
     pub protocol_profit_share: u32,
-    pub version: u8,
 }
 
 #[derive(Accounts)]
