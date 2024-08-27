@@ -1,15 +1,9 @@
-# Drift Vaults
-
-soon^TM
-
-
-[did you see the CLI?](./ts/sdk/README.md) and the [wiki?](https://github.com/drift-labs/drift-vaults/wiki)
-
+# Jupiter Vaults
 
 # Development
 
 * anchor 0.29.0
-* rust 1.70.0
+* rust 1.70.0 (1.70.0-x86_64-apple-darwin for Apple Silicon)
 * solana 1.16.27
 
 ```shell
@@ -19,7 +13,6 @@ avm use 0.29.0
 
 # if on Apple Silicon:
 # rustup override set 1.70.0-x86_64-apple-darwin
-# else
 rustup override set 1.70.0
 
 # if you already have solana:

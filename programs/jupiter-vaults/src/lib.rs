@@ -1,14 +1,26 @@
-pub fn add(left: usize, right: usize) -> usize {
-    left + right
-}
+mod instructions;
+mod state;
+mod tests;
+pub mod macros;
+mod error;
+mod math;
+mod constants;
 
-#[cfg(test)]
-mod tests {
+use anchor_lang::prelude::*;
+use instructions::*;
+use state::*;
+
+declare_id!("VAULT8EhRg1mduZJYCab7xkNq7ieXMQ1Tqec2LPU6jv");
+
+#[program]
+pub mod jupiter_vaults {
     use super::*;
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
+    pub fn initialize_vault<'c: 'info, 'info>(
+        ctx: Context<'_, '_, 'c, 'info, InitializeVault<'info>>,
+        params: VaultParams,
+    ) -> Result<()> {
+        instructions::initialize_vault(ctx, params)
     }
 }
+
