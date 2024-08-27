@@ -1,6 +1,10 @@
 [workspace]
 members = [
-    "programs/jupiter_vaults"
+    "programs/*",
+]
+# exclude from members
+exclude = [
+    "programs/jupiter",
 ]
 
 [profile.release]

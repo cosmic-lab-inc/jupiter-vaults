@@ -1,9 +1,9 @@
-use num_traits::{One, Zero};
 use crate::math::{U192, U256};
+use num_traits::{One, Zero};
 
 pub trait CheckedFloorDiv: Sized {
-  /// Perform floor division
-  fn checked_floor_div(&self, rhs: Self) -> Option<Self>;
+    /// Perform floor division
+    fn checked_floor_div(&self, rhs: Self) -> Option<Self>;
 }
 
 macro_rules! checked_impl {

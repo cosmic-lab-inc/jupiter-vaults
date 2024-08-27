@@ -1,6 +1,6 @@
-pub mod vault;
 mod traits;
+pub mod vault;
 pub mod withdraw_request;
 
-pub use vault::*;
 pub use traits::*;
+pub use vault::*;

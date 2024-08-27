@@ -1,9 +1,9 @@
-use num_traits::{One, Zero};
 use crate::math::{U192, U256};
+use num_traits::{One, Zero};
 
 pub trait CheckedCeilDiv: Sized {
-  /// Perform ceiling division
-  fn checked_ceil_div(&self, rhs: Self) -> Option<Self>;
+    /// Perform ceiling division
+    fn checked_ceil_div(&self, rhs: Self) -> Option<Self>;
 }
 
 macro_rules! checked_impl {

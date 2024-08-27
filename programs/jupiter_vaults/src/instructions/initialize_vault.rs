@@ -1,7 +1,7 @@
+use crate::constants::PERCENTAGE_PRECISION_U64;
+use crate::math::Cast;
 use anchor_lang::prelude::*;
 use anchor_spl::token::{Mint, Token, TokenAccount};
-use crate::math::Cast;
-use crate::constants::PERCENTAGE_PRECISION_U64;
 
 use crate::constants::ONE_DAY;
 use crate::state::Vault;
@@ -23,8 +23,8 @@ pub fn initialize_vault<'c: 'info, 'info>(
     vault.init_ts = Clock::get()?.unix_timestamp;
     vault.bump = bump;
     vault.permissioned = params.permissioned;
-    vault.version = params.version;
-    
+    // vault.version = params.version;
+
     validate!(
         params.redeem_period < ONE_DAY * 90,
         ErrorCode::InvalidVaultInitialization,

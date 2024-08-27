@@ -1,20 +1,18 @@
-use std::convert::TryInto;
-use crate::error::VaultResult;
-use anchor_lang::solana_program::msg;
 use crate::cast_error;
+use crate::error::VaultResult;
 use crate::math::{U192, U256};
+use anchor_lang::solana_program::msg;
+use std::convert::TryInto;
 
 pub trait Cast: Sized {
-  #[track_caller]
-  #[inline(always)]
-  fn cast<T: std::convert::TryFrom<Self>>(self) -> VaultResult<T> {
-    match self.try_into() {
-      Ok(result) => Ok(result),
-      Err(_) => {
-        Err(cast_error!()())
-      }
+    #[track_caller]
+    #[inline(always)]
+    fn cast<T: std::convert::TryFrom<Self>>(self) -> VaultResult<T> {
+        match self.try_into() {
+            Ok(result) => Ok(result),
+            Err(_) => Err(cast_error!()()),
+        }
     }
-  }
 }
 
 impl Cast for U256 {}

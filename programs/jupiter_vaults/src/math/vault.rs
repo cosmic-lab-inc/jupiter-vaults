@@ -1,8 +1,8 @@
 use crate::error::{ErrorCode, VaultResult};
+use crate::math::U192;
+use crate::math::{Cast, SafeMath};
 use crate::{math_error, validate};
 use anchor_lang::solana_program::msg;
-use crate::math::{Cast, SafeMath};
-use crate::math::{U192};
 
 pub fn shares_to_amount(
     n_shares: u128,
@@ -18,12 +18,7 @@ pub fn shares_to_amount(
     )?;
 
     let amount = if total_vault_shares > 0 {
-        get_proportion_u128(
-            vault_balance as u128,
-            n_shares,
-            total_vault_shares,
-        )?
-            .cast::<u64>()?
+        get_proportion_u128(vault_balance as u128, n_shares, total_vault_shares)?.cast::<u64>()?
     } else {
         0
     };

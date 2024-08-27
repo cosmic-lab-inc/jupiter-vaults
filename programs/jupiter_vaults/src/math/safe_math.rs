@@ -1,16 +1,16 @@
+use crate::error::VaultResult;
 use crate::math::ceil_div::CheckedCeilDiv;
 use crate::math::floor_div::CheckedFloorDiv;
-use crate::error::VaultResult;
+use crate::math::{U192, U256};
 use crate::math_error;
 use anchor_lang::solana_program::msg;
-use crate::math::{U192, U256};
 
 pub trait SafeMath: Sized {
-  fn safe_add(self, rhs: Self) -> VaultResult<Self>;
-  fn safe_sub(self, rhs: Self) -> VaultResult<Self>;
-  fn safe_mul(self, rhs: Self) -> VaultResult<Self>;
-  fn safe_div(self, rhs: Self) -> VaultResult<Self>;
-  fn safe_div_ceil(self, rhs: Self) -> VaultResult<Self>;
+    fn safe_add(self, rhs: Self) -> VaultResult<Self>;
+    fn safe_sub(self, rhs: Self) -> VaultResult<Self>;
+    fn safe_mul(self, rhs: Self) -> VaultResult<Self>;
+    fn safe_div(self, rhs: Self) -> VaultResult<Self>;
+    fn safe_div_ceil(self, rhs: Self) -> VaultResult<Self>;
 }
 
 macro_rules! checked_impl {
@@ -21,9 +21,7 @@ macro_rules! checked_impl {
             fn safe_add(self, v: $t) -> VaultResult<$t> {
                 match self.checked_add(v) {
                     Some(result) => Ok(result),
-                    None => {
-                        Err(math_error!()())
-                    }
+                    None => Err(math_error!()()),
                 }
             }
 
@@ -32,9 +30,7 @@ macro_rules! checked_impl {
             fn safe_sub(self, v: $t) -> VaultResult<$t> {
                 match self.checked_sub(v) {
                     Some(result) => Ok(result),
-                    None => {
-                        Err(math_error!()())
-                    }
+                    None => Err(math_error!()()),
                 }
             }
 
@@ -43,9 +39,7 @@ macro_rules! checked_impl {
             fn safe_mul(self, v: $t) -> VaultResult<$t> {
                 match self.checked_mul(v) {
                     Some(result) => Ok(result),
-                    None => {
-                        Err(math_error!()())
-                    }
+                    None => Err(math_error!()()),
                 }
             }
 
@@ -54,9 +48,7 @@ macro_rules! checked_impl {
             fn safe_div(self, v: $t) -> VaultResult<$t> {
                 match self.checked_div(v) {
                     Some(result) => Ok(result),
-                    None => {
-                        Err(math_error!()())
-                    }
+                    None => Err(math_error!()()),
                 }
             }
 
@@ -65,9 +57,7 @@ macro_rules! checked_impl {
             fn safe_div_ceil(self, v: $t) -> VaultResult<$t> {
                 match self.checked_ceil_div(v) {
                     Some(result) => Ok(result),
-                    None => {
-                        Err(math_error!()())
-                    }
+                    None => Err(math_error!()()),
                 }
             }
         }
@@ -88,8 +78,8 @@ checked_impl!(i16);
 checked_impl!(i8);
 
 pub trait SafeDivFloor: Sized {
-  /// Perform floor division
-  fn safe_div_floor(self, rhs: Self) -> VaultResult<Self>;
+    /// Perform floor division
+    fn safe_div_floor(self, rhs: Self) -> VaultResult<Self>;
 }
 
 macro_rules! div_floor_impl {
@@ -100,9 +90,7 @@ macro_rules! div_floor_impl {
             fn safe_div_floor(self, v: $t) -> VaultResult<$t> {
                 match self.checked_floor_div(v) {
                     Some(result) => Ok(result),
-                    None => {
-                        Err(math_error!()())
-                    }
+                    None => Err(math_error!()()),
                 }
             }
         }

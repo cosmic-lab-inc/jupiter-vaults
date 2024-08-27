@@ -1,12 +1,15 @@
-use crate::error::{VaultResult, ErrorCode};
+use crate::error::{ErrorCode, VaultResult};
+use crate::math::safe_math::SafeMath;
+use crate::math::vault::{amount_to_shares, shares_to_amount};
 use crate::{validate, Vault};
 use anchor_lang::prelude::*;
 use anchor_lang::solana_program;
 use bytemuck::Zeroable;
-use crate::math::vault::{shares_to_amount, amount_to_shares};
-use crate::math::safe_math::SafeMath;
+use drift_macros::assert_no_slop;
 use solana_program::msg;
+use static_assertions::const_assert_eq;
 
+#[assert_no_slop]
 #[derive(
     Default, AnchorSerialize, AnchorDeserialize, Copy, Clone, Eq, PartialEq, Debug, Zeroable,
 )]

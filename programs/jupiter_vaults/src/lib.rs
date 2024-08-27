@@ -1,10 +1,10 @@
+mod constants;
+mod error;
 mod instructions;
+pub mod macros;
+mod math;
 mod state;
 mod tests;
-pub mod macros;
-mod error;
-mod math;
-mod constants;
 
 use anchor_lang::prelude::*;
 use instructions::*;
@@ -23,4 +23,3 @@ pub mod jupiter_vaults {
         instructions::initialize_vault(ctx, params)
     }
 }
-
