@@ -1108,7 +1108,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "jupiter_vaults"
+name = "jupiter-vaults"
 version = "0.1.0"
 dependencies = [
  "ahash 0.8.6",

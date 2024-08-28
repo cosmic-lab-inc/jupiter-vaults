@@ -3,7 +3,6 @@ import { AnchorProvider, Program, Provider } from '@coral-xyz/anchor';
 import {
 	AccountLayout,
 	MintLayout,
-	NATIVE_MINT,
 	TOKEN_PROGRAM_ID,
 	getMinimumBalanceForRentExemptMint,
 	getMinimumBalanceForRentExemptAccount,
@@ -24,12 +23,18 @@ import {
 } from '@solana/web3.js';
 import { assert } from 'chai';
 import buffer from 'buffer';
-import {
-	BN,
-	Wallet,
-	OraclePriceData,
-	PRICE_PRECISION,
-} from '@drift-labs/sdk';
+import { BN } from '@coral-xyz/anchor';
+import {PRICE_PRECISION} from "../ts/sdk";
+
+export type OraclePriceData = {
+	price: BN;
+	slot: BN;
+	confidence: BN;
+	hasSufficientNumberOfDataPoints: boolean;
+	twap?: BN;
+	twapConfidence?: BN;
+	maxPrice?: BN; // pre-launch markets only
+};
 
 export async function mockOracle(
 	price: number = 50 * 10e7,
@@ -221,7 +226,7 @@ export async function createUSDCAccountForUser(
 
 export async function createWSolTokenAccountForUser(
 	provider: AnchorProvider,
-	userKeypair: Keypair | Wallet,
+	userKeypair: Keypair,
 	amount: BN
 ): Promise<PublicKey> {
 	await provider.connection.requestAirdrop(

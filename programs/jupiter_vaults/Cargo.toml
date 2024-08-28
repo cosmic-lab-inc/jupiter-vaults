@@ -1,5 +1,5 @@
 [package]
-name = "jupiter_vaults"
+name = "jupiter-vaults"
 version = "0.1.0"
 description = "Created with Anchor"
 edition = "2021"

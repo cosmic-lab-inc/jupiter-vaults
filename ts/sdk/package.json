@@ -1,6 +1,6 @@
 {
-  "name": "@drift-labs/vaults-sdk",
-  "version": "0.1.413",
+  "name": "@cosmic-lab/jupiter-vaults-sdk",
+  "version": "0.1.0",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "directories": {
@@ -8,9 +8,8 @@
   },
   "dependencies": {
     "@coral-xyz/anchor": "0.28.0",
-    "@drift-labs/competitions-sdk": "0.2.386",
-    "@drift-labs/sdk": "2.93.0-beta.3",
     "@solana/web3.js": "1.92.3",
+    "@solana/spl-token": "0.4.8",
     "commander": "^11.0.0",
     "dotenv": "^16.3.1",
     "rpc-websockets": "7.5.1",
@@ -22,7 +21,6 @@
     "node": ">=16"
   },
   "scripts": {
-    "cli": "ts-node cli/cli.ts",
     "clean": "rm -rf lib",
     "build": "yarn clean && tsc"
   }
