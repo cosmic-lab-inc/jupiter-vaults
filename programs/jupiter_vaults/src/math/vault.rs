@@ -101,3 +101,29 @@ pub fn standardize_value_with_remainder_i128(
 
     Ok((standardized_value, remainder))
 }
+
+pub fn calculate_rebase_info(
+    total_if_shares: u128,
+    insurance_fund_vault_balance: u64,
+) -> VaultResult<(u32, u128)> {
+    let rebase_divisor_full = total_if_shares
+        .safe_div(10)?
+        .safe_div(insurance_fund_vault_balance.cast::<u128>()?)?;
+
+    let expo_diff = log10_iter(rebase_divisor_full).cast::<u32>()?;
+    let rebase_divisor = 10_u128.pow(expo_diff);
+
+    Ok((expo_diff, rebase_divisor))
+}
+
+fn log10_iter(n: u128) -> u128 {
+    let mut result = 0;
+    let mut n_copy = n;
+
+    while n_copy >= 10 {
+        result += 1;
+        n_copy /= 10;
+    }
+
+    result
+}
