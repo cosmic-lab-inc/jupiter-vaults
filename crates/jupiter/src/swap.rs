@@ -1,12 +1,12 @@
-use anchor_lang::prelude::AnchorSerialize;
+use borsh::BorshSerialize;
 
-#[derive(AnchorSerialize, Copy, Clone, Debug, PartialEq)]
+#[derive(BorshSerialize, Copy, Clone, Debug, PartialEq)]
 pub enum Side {
     Bid,
     Ask,
 }
 
-#[derive(AnchorSerialize, Clone, PartialEq, Debug)]
+#[derive(BorshSerialize, Clone, PartialEq, Debug)]
 pub enum Swap {
     Saber,
     SaberAddDecimalsDeposit,
@@ -111,7 +111,7 @@ pub enum Swap {
     },
 }
 
-#[derive(AnchorSerialize, Clone, PartialEq, Eq, Debug)]
+#[derive(BorshSerialize, Clone, PartialEq, Eq, Debug)]
 pub enum AccountsType {
     TransferHookA,
     TransferHookB,
@@ -124,13 +124,13 @@ pub enum AccountsType {
     //TickArrayTwo,
 }
 
-#[derive(AnchorSerialize, Clone, Debug, PartialEq)]
+#[derive(BorshSerialize, Clone, Debug, PartialEq)]
 pub struct RemainingAccountsSlice {
     pub accounts_type: AccountsType,
     pub length: u8,
 }
 
-#[derive(AnchorSerialize, Clone, Debug, PartialEq)]
+#[derive(BorshSerialize, Clone, Debug, PartialEq)]
 pub struct RemainingAccountsInfo {
     pub slices: Vec<RemainingAccountsSlice>,
 }
