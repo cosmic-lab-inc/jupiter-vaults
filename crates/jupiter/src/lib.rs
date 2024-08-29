@@ -6,7 +6,7 @@ use rand::{
     distributions::{Distribution, Uniform},
     seq::IteratorRandom,
 };
-use anchor_lang::solana_program::pubkey;
+use solana_program::pubkey;
 
 mod swap;
 
