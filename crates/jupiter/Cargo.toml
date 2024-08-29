@@ -21,4 +21,4 @@ anchor-gen = { git = "https://github.com/cosmic-lab-inc/anchor-gen.git", branch 
 anchor-lang = "0.29.0"
 rand = "0.8.5"
 borsh = "0.10.3" 
-solana-program = ">=1.13"
+solana-program = "1.16"

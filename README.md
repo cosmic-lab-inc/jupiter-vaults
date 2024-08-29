@@ -38,3 +38,8 @@ yarn && cd ts/sdk && yarn && yarn build && cd ..
 
 export ANCHOR_WALLET=~/.config/solana/id.json && anchor test
 ```
+
+```shell
+rustup override set 1.75.0-x86_64-apple-darwin
+solana-install init 1.16.27
+```
