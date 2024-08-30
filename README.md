@@ -3,8 +3,8 @@
 # Development
 
 * anchor 0.29.0
-* rust 1.70.0 (1.70.0-x86_64-apple-darwin for Apple Silicon)
-* solana 1.16.27
+* rust 1.75.0 (1.75.0-x86_64-apple-darwin for Apple Silicon)
+* solana 1.18.8
 
 ```shell
 # if you don't have avm, install it here: 
@@ -12,13 +12,10 @@
 avm use 0.29.0
 
 # if on Apple Silicon:
-# rustup override set 1.70.0-x86_64-apple-darwin
-rustup override set 1.70.0
+# rustup override set 1.75.0-x86_64-apple-darwin
+rustup override set 1.75.0
 
-# if you already have solana:
-# solana-install init 1.16.27
-# else:
-sh -c "$(curl -sSfL https://release.solana.com/v1.16.27/install)"
+agave-install init 1.18.8
 ```
 
 If on Mac and getting this error: 
@@ -37,9 +34,4 @@ export PATH="/opt/homebrew/opt/gnu-tar/libexec/gnubin:$PATH"
 yarn && cd ts/sdk && yarn && yarn build && cd ..
 
 export ANCHOR_WALLET=~/.config/solana/id.json && anchor test
-```
-
-```shell
-rustup override set 1.75.0-x86_64-apple-darwin
-solana-install init 1.18.4
 ```

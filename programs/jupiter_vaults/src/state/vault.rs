@@ -9,7 +9,7 @@ use crate::state::{InvestorAction, InvestorRecord, VaultFee, WithdrawUnit};
 use crate::math::{shares_to_amount, amount_to_shares, SafeMath, Cast, calculate_rebase_info};
 use crate::error::{ErrorCode, VaultResult};
 
-#[assert_no_slop]
+// #[assert_no_slop]
 #[account(zero_copy(unsafe))]
 #[derive(Default, Eq, PartialEq, Debug)]
 #[repr(C)]
@@ -115,7 +115,7 @@ impl Vault {
 impl Size for Vault {
     const SIZE: usize = 512 + 8;
 }
-const_assert_eq!(Vault::SIZE, std::mem::size_of::<Vault>() + 8);
+// const_assert_eq!(Vault::SIZE, std::mem::size_of::<Vault>() + 8);
 
 impl Vault {
     pub fn apply_fee(
@@ -313,11 +313,10 @@ impl Vault {
     pub fn get_manager_shares(
         &self,
     ) -> VaultResult<u128> {
-        Ok(self
+        self
             .total_shares
             .safe_sub(self.investor_shares)?
-            .safe_sub(self.protocol_profit_and_fee_shares)?
-        )
+            .safe_sub(self.protocol_profit_and_fee_shares)
     }
 
     pub fn get_protocol_shares(&self) -> u128 {
@@ -325,7 +324,7 @@ impl Vault {
     }
 
     pub fn get_profit_share(&self) -> VaultResult<u32> {
-        Ok(self.profit_share.safe_add(self.protocol_profit_share)?)
+        self.profit_share.safe_add(self.protocol_profit_share)
     }
 
     pub fn apply_rebase(

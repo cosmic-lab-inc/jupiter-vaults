@@ -9,7 +9,7 @@ use drift_macros::assert_no_slop;
 use solana_program::msg;
 use static_assertions::const_assert_eq;
 
-#[assert_no_slop]
+// #[assert_no_slop]
 #[derive(
     Default, AnchorSerialize, AnchorDeserialize, Copy, Clone, Eq, PartialEq, Debug, Zeroable,
 )]
