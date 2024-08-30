@@ -22,3 +22,5 @@ ahash = "=0.8.6"
 uint = "0.9.1"
 num-traits = "0.2.15"
 drift-macros = { git = "https://github.com/drift-labs/drift-macros.git", rev = "c57d87" }
+jupiter = { git = "https://github.com/cosmic-lab-inc/jupiter-cpi.git", branch = "main" }
+borsh = ">=0.9, <1.0.0"
