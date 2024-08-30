@@ -50,11 +50,7 @@ pub struct Investor {
 impl Size for Investor {
     const SIZE: usize = 264 + 8;
 }
-
-const_assert_eq!(
-    Investor::SIZE,
-    std::mem::size_of::<Investor>() + 8
-);
+const_assert_eq!(Investor::SIZE, std::mem::size_of::<Investor>() + 8);
 
 impl Investor {
     pub fn new(vault: Pubkey, pubkey: Pubkey, authority: Pubkey, now: i64) -> Self {

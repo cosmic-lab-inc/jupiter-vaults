@@ -41,5 +41,5 @@ export ANCHOR_WALLET=~/.config/solana/id.json && anchor test
 
 ```shell
 rustup override set 1.75.0-x86_64-apple-darwin
-solana-install init 1.16.27
+solana-install init 1.18.4
 ```
