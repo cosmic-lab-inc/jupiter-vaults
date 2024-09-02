@@ -6,7 +6,7 @@ import {
 	JupiterVaults,
 	encodeName,
 	VaultParams,
-	getTokenVaultAddressSync,
+	getTokenVaultAddressSync, getInvestorAddressSync,
 } from "../ts/sdk";
 import {BN} from "@coral-xyz/anchor";
 import {mockUSDCMint} from "./testHelpers";
@@ -25,15 +25,20 @@ describe('jupiterVaults', () => {
 
 	// const initialSolPerpPrice = 100;
 
+	let mint: Keypair;
 	const _manager = provider.publicKey;
 	const protocol = provider.publicKey;
-	let mint: Keypair;
 
 	const name = 'Test Vault';
 	const vaultKey = getVaultAddressSync(program.programId, encodeName(name));
 	const vaultAta = getTokenVaultAddressSync(
 		program.programId,
 		vaultKey,
+	);
+	const investor = getInvestorAddressSync(
+		program.programId,
+		vaultKey,
+		provider.publicKey,
 	);
 
 	before(async () => {
@@ -68,4 +73,17 @@ describe('jupiterVaults', () => {
 		assert(!!acct);
 	});
 
+	it('Initialize Investor', async () => {
+		const accounts = {
+			vault: vaultKey,
+			investor,
+			authority: provider.publicKey,
+		};
+		// @ts-ignore
+		await program.methods.initializeInvestor()
+			.accounts(accounts)
+			.rpc();
+		const acct = await program.account.investor.fetch(investor);
+		assert(!!acct);
+	});
 });

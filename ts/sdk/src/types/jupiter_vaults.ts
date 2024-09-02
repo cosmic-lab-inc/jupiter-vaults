@@ -54,9 +54,132 @@ export type JupiterVaults = {
 					};
 				}
 			];
+		},
+		{
+			name: 'initializeInvestor';
+			accounts: [
+				{
+					name: 'vault';
+					isMut: false;
+					isSigner: false;
+				},
+				{
+					name: 'investor';
+					isMut: true;
+					isSigner: false;
+				},
+				{
+					name: 'authority';
+					isMut: false;
+					isSigner: false;
+				},
+				{
+					name: 'payer';
+					isMut: true;
+					isSigner: true;
+				},
+				{
+					name: 'rent';
+					isMut: false;
+					isSigner: false;
+				},
+				{
+					name: 'systemProgram';
+					isMut: false;
+					isSigner: false;
+				}
+			];
+			args: [];
 		}
 	];
 	accounts: [
+		{
+			name: 'investor';
+			type: {
+				kind: 'struct';
+				fields: [
+					{
+						name: 'vault';
+						docs: ['The vault deposited into'];
+						type: 'publicKey';
+					},
+					{
+						name: 'pubkey';
+						docs: [
+							"The vault depositor account's pubkey. It is a pda of vault and authority"
+						];
+						type: 'publicKey';
+					},
+					{
+						name: 'authority';
+						docs: [
+							'The authority is the address w permission to deposit/withdraw'
+						];
+						type: 'publicKey';
+					},
+					{
+						name: 'vaultShares';
+						docs: [
+							"share of vault owned by this depositor. vault_shares / vault.total_shares is depositor's ownership of vault_equity"
+						];
+						type: 'u128';
+					},
+					{
+						name: 'lastWithdrawRequest';
+						docs: ['last withdraw request'];
+						type: {
+							defined: 'WithdrawRequest';
+						};
+					},
+					{
+						name: 'lastValidTs';
+						docs: ['creation ts of vault depositor'];
+						type: 'i64';
+					},
+					{
+						name: 'netDeposits';
+						docs: ['lifetime net deposits of vault depositor for the vault'];
+						type: 'i64';
+					},
+					{
+						name: 'totalDeposits';
+						docs: ['lifetime total deposits'];
+						type: 'u64';
+					},
+					{
+						name: 'totalWithdraws';
+						docs: ['lifetime total withdraws'];
+						type: 'u64';
+					},
+					{
+						name: 'cumulativeProfitShareAmount';
+						docs: [
+							'the token amount of gains the vault depositor has paid performance fees on'
+						];
+						type: 'i64';
+					},
+					{
+						name: 'profitShareFeePaid';
+						type: 'u64';
+					},
+					{
+						name: 'vaultSharesBase';
+						docs: ['the exponent for vault_shares decimal places'];
+						type: 'u32';
+					},
+					{
+						name: 'padding1';
+						type: 'u32';
+					},
+					{
+						name: 'padding';
+						type: {
+							array: ['u64', 8];
+						};
+					}
+				];
+			};
+		},
 		{
 			name: 'vault';
 			type: {
@@ -397,6 +520,170 @@ export type JupiterVaults = {
 					}
 				];
 			};
+		},
+		{
+			name: 'InvestorAction';
+			type: {
+				kind: 'enum';
+				variants: [
+					{
+						name: 'Deposit';
+					},
+					{
+						name: 'WithdrawRequest';
+					},
+					{
+						name: 'CancelWithdrawRequest';
+					},
+					{
+						name: 'Withdraw';
+					},
+					{
+						name: 'FeePayment';
+					}
+				];
+			};
+		},
+		{
+			name: 'WithdrawUnit';
+			type: {
+				kind: 'enum';
+				variants: [
+					{
+						name: 'Shares';
+					},
+					{
+						name: 'Token';
+					},
+					{
+						name: 'SharesPercent';
+					}
+				];
+			};
+		}
+	];
+	events: [
+		{
+			name: 'VaultRecord';
+			fields: [
+				{
+					name: 'ts';
+					type: 'i64';
+					index: false;
+				},
+				{
+					name: 'spotMarketIndex';
+					type: 'u16';
+					index: false;
+				},
+				{
+					name: 'vaultEquityBefore';
+					type: 'u64';
+					index: false;
+				}
+			];
+		},
+		{
+			name: 'InvestorRecord';
+			fields: [
+				{
+					name: 'ts';
+					type: 'i64';
+					index: false;
+				},
+				{
+					name: 'vault';
+					type: 'publicKey';
+					index: false;
+				},
+				{
+					name: 'depositorAuthority';
+					type: 'publicKey';
+					index: false;
+				},
+				{
+					name: 'action';
+					type: {
+						defined: 'InvestorAction';
+					};
+					index: false;
+				},
+				{
+					name: 'amount';
+					type: 'u64';
+					index: false;
+				},
+				{
+					name: 'mint';
+					type: 'publicKey';
+					index: false;
+				},
+				{
+					name: 'vaultSharesBefore';
+					type: 'u128';
+					index: false;
+				},
+				{
+					name: 'vaultSharesAfter';
+					type: 'u128';
+					index: false;
+				},
+				{
+					name: 'vaultEquityBefore';
+					type: 'u64';
+					index: false;
+				},
+				{
+					name: 'userVaultSharesBefore';
+					type: 'u128';
+					index: false;
+				},
+				{
+					name: 'totalVaultSharesBefore';
+					type: 'u128';
+					index: false;
+				},
+				{
+					name: 'userVaultSharesAfter';
+					type: 'u128';
+					index: false;
+				},
+				{
+					name: 'totalVaultSharesAfter';
+					type: 'u128';
+					index: false;
+				},
+				{
+					name: 'protocolProfitShare';
+					type: 'u64';
+					index: false;
+				},
+				{
+					name: 'protocolFee';
+					type: 'i64';
+					index: false;
+				},
+				{
+					name: 'protocolFeeShares';
+					type: 'i64';
+					index: false;
+				},
+				{
+					name: 'managerProfitShare';
+					type: 'u64';
+					index: false;
+				},
+				{
+					name: 'managementFee';
+					type: 'i64';
+					index: false;
+				},
+				{
+					name: 'managementFeeShares';
+					type: 'i64';
+					index: false;
+				}
+			];
 		}
 	];
 	errors: [
@@ -595,8 +882,131 @@ export const IDL: JupiterVaults = {
 				},
 			],
 		},
+		{
+			name: 'initializeInvestor',
+			accounts: [
+				{
+					name: 'vault',
+					isMut: false,
+					isSigner: false,
+				},
+				{
+					name: 'investor',
+					isMut: true,
+					isSigner: false,
+				},
+				{
+					name: 'authority',
+					isMut: false,
+					isSigner: false,
+				},
+				{
+					name: 'payer',
+					isMut: true,
+					isSigner: true,
+				},
+				{
+					name: 'rent',
+					isMut: false,
+					isSigner: false,
+				},
+				{
+					name: 'systemProgram',
+					isMut: false,
+					isSigner: false,
+				},
+			],
+			args: [],
+		},
 	],
 	accounts: [
+		{
+			name: 'investor',
+			type: {
+				kind: 'struct',
+				fields: [
+					{
+						name: 'vault',
+						docs: ['The vault deposited into'],
+						type: 'publicKey',
+					},
+					{
+						name: 'pubkey',
+						docs: [
+							"The vault depositor account's pubkey. It is a pda of vault and authority",
+						],
+						type: 'publicKey',
+					},
+					{
+						name: 'authority',
+						docs: [
+							'The authority is the address w permission to deposit/withdraw',
+						],
+						type: 'publicKey',
+					},
+					{
+						name: 'vaultShares',
+						docs: [
+							"share of vault owned by this depositor. vault_shares / vault.total_shares is depositor's ownership of vault_equity",
+						],
+						type: 'u128',
+					},
+					{
+						name: 'lastWithdrawRequest',
+						docs: ['last withdraw request'],
+						type: {
+							defined: 'WithdrawRequest',
+						},
+					},
+					{
+						name: 'lastValidTs',
+						docs: ['creation ts of vault depositor'],
+						type: 'i64',
+					},
+					{
+						name: 'netDeposits',
+						docs: ['lifetime net deposits of vault depositor for the vault'],
+						type: 'i64',
+					},
+					{
+						name: 'totalDeposits',
+						docs: ['lifetime total deposits'],
+						type: 'u64',
+					},
+					{
+						name: 'totalWithdraws',
+						docs: ['lifetime total withdraws'],
+						type: 'u64',
+					},
+					{
+						name: 'cumulativeProfitShareAmount',
+						docs: [
+							'the token amount of gains the vault depositor has paid performance fees on',
+						],
+						type: 'i64',
+					},
+					{
+						name: 'profitShareFeePaid',
+						type: 'u64',
+					},
+					{
+						name: 'vaultSharesBase',
+						docs: ['the exponent for vault_shares decimal places'],
+						type: 'u32',
+					},
+					{
+						name: 'padding1',
+						type: 'u32',
+					},
+					{
+						name: 'padding',
+						type: {
+							array: ['u64', 8],
+						},
+					},
+				],
+			},
+		},
 		{
 			name: 'vault',
 			type: {
@@ -937,6 +1347,170 @@ export const IDL: JupiterVaults = {
 					},
 				],
 			},
+		},
+		{
+			name: 'InvestorAction',
+			type: {
+				kind: 'enum',
+				variants: [
+					{
+						name: 'Deposit',
+					},
+					{
+						name: 'WithdrawRequest',
+					},
+					{
+						name: 'CancelWithdrawRequest',
+					},
+					{
+						name: 'Withdraw',
+					},
+					{
+						name: 'FeePayment',
+					},
+				],
+			},
+		},
+		{
+			name: 'WithdrawUnit',
+			type: {
+				kind: 'enum',
+				variants: [
+					{
+						name: 'Shares',
+					},
+					{
+						name: 'Token',
+					},
+					{
+						name: 'SharesPercent',
+					},
+				],
+			},
+		},
+	],
+	events: [
+		{
+			name: 'VaultRecord',
+			fields: [
+				{
+					name: 'ts',
+					type: 'i64',
+					index: false,
+				},
+				{
+					name: 'spotMarketIndex',
+					type: 'u16',
+					index: false,
+				},
+				{
+					name: 'vaultEquityBefore',
+					type: 'u64',
+					index: false,
+				},
+			],
+		},
+		{
+			name: 'InvestorRecord',
+			fields: [
+				{
+					name: 'ts',
+					type: 'i64',
+					index: false,
+				},
+				{
+					name: 'vault',
+					type: 'publicKey',
+					index: false,
+				},
+				{
+					name: 'depositorAuthority',
+					type: 'publicKey',
+					index: false,
+				},
+				{
+					name: 'action',
+					type: {
+						defined: 'InvestorAction',
+					},
+					index: false,
+				},
+				{
+					name: 'amount',
+					type: 'u64',
+					index: false,
+				},
+				{
+					name: 'mint',
+					type: 'publicKey',
+					index: false,
+				},
+				{
+					name: 'vaultSharesBefore',
+					type: 'u128',
+					index: false,
+				},
+				{
+					name: 'vaultSharesAfter',
+					type: 'u128',
+					index: false,
+				},
+				{
+					name: 'vaultEquityBefore',
+					type: 'u64',
+					index: false,
+				},
+				{
+					name: 'userVaultSharesBefore',
+					type: 'u128',
+					index: false,
+				},
+				{
+					name: 'totalVaultSharesBefore',
+					type: 'u128',
+					index: false,
+				},
+				{
+					name: 'userVaultSharesAfter',
+					type: 'u128',
+					index: false,
+				},
+				{
+					name: 'totalVaultSharesAfter',
+					type: 'u128',
+					index: false,
+				},
+				{
+					name: 'protocolProfitShare',
+					type: 'u64',
+					index: false,
+				},
+				{
+					name: 'protocolFee',
+					type: 'i64',
+					index: false,
+				},
+				{
+					name: 'protocolFeeShares',
+					type: 'i64',
+					index: false,
+				},
+				{
+					name: 'managerProfitShare',
+					type: 'u64',
+					index: false,
+				},
+				{
+					name: 'managementFee',
+					type: 'i64',
+					index: false,
+				},
+				{
+					name: 'managementFeeShares',
+					type: 'i64',
+					index: false,
+				},
+			],
 		},
 	],
 	errors: [

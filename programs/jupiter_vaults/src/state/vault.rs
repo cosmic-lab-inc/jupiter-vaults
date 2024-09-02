@@ -110,6 +110,12 @@ impl Vault {
     pub fn get_vault_signer_seeds<'a>(name: &'a [u8], bump: &'a u8) -> [&'a [u8]; 3] {
         [b"vault".as_ref(), name, bytemuck::bytes_of(bump)]
     }
+    pub fn seeds(name: &str) -> [&[u8]; 2] {
+        [b"vault", name.as_bytes()]
+    }
+    pub fn token_seeds(vault: &Pubkey) -> [&[u8]; 2] {
+        [b"vault_token_account".as_ref(), vault.as_ref()]
+    }
 }
 
 impl Size for Vault {

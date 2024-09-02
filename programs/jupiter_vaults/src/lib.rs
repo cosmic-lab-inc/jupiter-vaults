@@ -22,4 +22,10 @@ pub mod jupiter_vaults {
     ) -> Result<()> {
         instructions::initialize_vault(ctx, params)
     }
+
+    pub fn initialize_investor<'c: 'info, 'info>(
+        ctx: Context<'_, '_, 'c, 'info, InitializeInvestor<'info>>
+    ) -> Result<()> {
+        instructions::initialize_investor(ctx)
+    }
 }

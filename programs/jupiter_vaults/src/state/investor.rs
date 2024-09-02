@@ -49,6 +49,12 @@ pub struct Investor {
     pub padding: [u64; 8],
 }
 
+impl Investor {
+    pub fn seeds<'a>(vault: &'a Pubkey, authority: &'a Pubkey) -> [&'a [u8]; 3] {
+        [b"investor", vault.as_ref(), authority.as_ref()]
+    }
+}
+
 impl Size for Investor {
     const SIZE: usize = 264 + 8;
 }
